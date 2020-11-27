@@ -3,11 +3,51 @@
   <head>
     <meta charset="UTF-8">
     <title>SFEI Visualization</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
     <script type="text/javascript" src="helper.js"></script>
+    <script type="text/javascript" src="circleVis.js"></script>
+    <script type="text/javascript" src="yearVis.js"></script>
   </head>
-  <body>
+  <body style="font-family: 'Cabin'; text-align: center; background-color: #fbfbfb; margin-top: 50;">
+    <h2 style="font-family: 'Ubuntu'; padding-top: 50px; font-size: 40px;">Title Title Title</h2>
+    <svg height="450" width="1100" class="circleVis"/>
     <script>
+    let padding = 25;
+    const locationList = ["carq", "central", "lower", "rivers", "san", "south", "suisun"];
+    const locToFullLocation = {
+      "carq": "Carquinez Strait",
+      "central": "Central SF Bay",
+      "lower": "Lower SF Bay",
+      "rivers": "Rivers",
+      "san": "San Pablo Bay",
+      "south": "South SF Bay",
+      "suisun": "Suisun Bay"
+    }
+
+    const getDataAndDrawVis = async() => {
+       let pcbFishData = await d3.csv("pcb_tissue_final.csv");
+       let pcbFishNames = getFishNames(pcbFishData);
+       let pcbSedimentData = await d3.csv("pcb_sediment_final.csv");
+
+       let mercuryFishData = await d3.csv("mercury_tissue_final.csv");
+       let mercuryFishNames = getFishNames(mercuryFishData);
+       let mercurySedimentData = await d3.csv("mercury_sediment_final.csv");
+
+       // console.log(findAvgBySet(pcbFishData, pcbFishNames, "commonname"));
+       // console.log(findAvgBySet(mercuryFishData, mercuryFishNames, "commonname", 1000));
+
+       let pcbFishAvgByLocation = findAvgBySet(pcbFishData, locationList, "location");
+       let pcbSedimentAvgByLocation = findAvgBySet(pcbSedimentData, locationList, "location");
+       let mercuryFishAvgByLocation = findAvgBySet(mercuryFishData, locationList, "location", 1000);
+       let mercurySedimentAvgByLocation = findAvgBySet(mercurySedimentData, locationList, "location", 1000);
+       let circleMaxValue = findMaxValueInMap(mercuryFishAvgByLocation);
+
+       drawCircleVis(".circleVis", circleMaxValue, pcbFishAvgByLocation, pcbSedimentAvgByLocation, mercuryFishAvgByLocation, mercurySedimentAvgByLocation);
+     }
+
+     getDataAndDrawVis();
     </script>
   </body>
 </html>
