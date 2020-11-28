@@ -12,6 +12,20 @@ function drawBarVis(svgClass, pData, mData) {
   createBarGraph(svg, barAttr, pData, mostPcbList, 0, "Most PCB Conc. (ng/g)");
   createBarGraph(svg, barAttr, mData, mostMList, 1, "Most Mercury Conc. (ng/g)");
   createBarGraph(svg, barAttr, pData, safePcbList, 2, "Least PCB Conc. (ng/g)");
+
+  // add annotations
+  svg.append("text")
+    .attr("x", barAttr.width/3 * 2 + padding*3)
+    .attr("y", barAttr.height/4 * 3)
+    .text("The low numbers mean that these ↑")
+    .style("font-size", "13px")
+    .style("fill", textColor);
+  svg.append("text")
+    .attr("x", barAttr.width/3 * 2 + padding*3)
+    .attr("y", barAttr.height/4 * 3 + 15)
+    .text("fish species are safe to eat! 🍴")
+    .style("font-size", "13px")
+    .style("fill", textColor);
 }
 
 function createBarGraph(svg, barAttr, data, lst, mul, title) {
@@ -44,7 +58,7 @@ function createBarGraph(svg, barAttr, data, lst, mul, title) {
       .attr("x", (barAttr.width/3 + padding*1.5) * mul + padding*7 - 5)
       .attr("y", (d, i) => yScale(i) + yScale.bandwidth()/2)
       .text((d, i) => lst[i])
-      .style("font-size", 14)
+      .style("font-size", "14px")
       .style("fill", textColor)
       .style("text-anchor", "end");
   svg.selectAll("#textValue")
@@ -54,7 +68,7 @@ function createBarGraph(svg, barAttr, data, lst, mul, title) {
       .attr("x", (d) => xScale(data.get(d)) + 5)
       .attr("y", (d, i) => yScale(i) + yScale.bandwidth()/2)
       .text((d, i) => data.get(d).toFixed(2))
-      .style("font-size", 12)
+      .style("font-size", "12px")
       .style("font-weight", "bold")
       .style("fill", textColor)
       .style("text-anchor", "stackBarAttr");
@@ -67,6 +81,6 @@ function createBarGraph(svg, barAttr, data, lst, mul, title) {
     .style("font-family", "Ubuntu")
     .style("font-weight", "bold")
     .style("font-color", textColor)
-    .style("font-size", 16);
+    .style("font-size", "16px");
 
 }

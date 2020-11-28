@@ -58,12 +58,12 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
   svg.append("g").call(d3.axisLeft(yScale).ticks(5))
     .attr("transform", "translate(100, 0)")
     .style("font-family", "Cabin")
-    .style("font-size", 11)
+    .style("font-size", "11px")
     .select(".domain").remove();
   svg.append("g").call(d3.axisRight(yScale).ticks(5))
     .attr("transform", "translate(900, 0)")
     .style("font-family", "Cabin")
-    .style("font-size", 11)
+    .style("font-size", "11px")
     .select(".domain").remove();
   // draw bottom flat graphs
   svg.append("path")
@@ -98,7 +98,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .style("font-weight", "bold")
       .style("font-family", "Ubuntu")
       .style("fill", textColor)
-      .style("font-size", 18);
+      .style("font-size", "18px");
     svg.append("text")
       .attr("x", yearAttr.width/4 * 3)
       .attr("y", padding*3)
@@ -107,7 +107,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .style("font-family", "Ubuntu")
       .style("font-weight", "bold")
       .style("fill", textColor)
-      .style("font-size", 18);
+      .style("font-size", "18px");
 
     // add more annotations
     svg.append("text")
@@ -115,7 +115,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2)
       .attr("y", yearAttr.height/2 - padding)
       .text("← Total Concentration →")
-      .style("font-size", 12)
+      .style("font-size", "12px")
       .style("text-anchor", "middle")
       .style("fill", textColor)
       .style("font-weight", "bold");
@@ -124,7 +124,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2)
       .attr("y", yearAttr.height/2 - padding)
       .text("Fish Tissue Conc.")
-      .style("font-size", 12)
+      .style("font-size", "12px")
       .style("text-anchor", "middle")
       .style("fill", textColor)
       .style("font-weight", "bold")
@@ -134,7 +134,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2)
       .attr("y", yearAttr.height/2 + padding)
       .text("Sediments Conc.")
-      .style("font-size", 12)
+      .style("font-size", "12px")
       .style("text-anchor", "middle")
       .style("fill", textColor)
       .style("font-weight", "bold")
@@ -143,7 +143,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", padding*4 - 15)
       .attr("y", yearAttr.height/2 + padding/2)
       .text("year →")
-      .style("font-size", 12)
+      .style("font-size", "12px")
       .style("font-family", "Cabin")
       .style("fill", textColor)
       .style("text-anchor", "middle");
@@ -152,7 +152,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("y", yearAttr.height/2 + padding/2)
       .text("year →")
       .style("font-family", "Cabin")
-      .style("font-size", 12)
+      .style("font-size", "12px")
       .style("fill", textColor)
       .style("text-anchor", "middle");
 
@@ -163,7 +163,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .text("↓ click here!")
       .style("font-weight", "bold")
       .style("fill", accentColor)
-      .style("font-size", 12);
+      .style("font-size", "12px");
     svg.append("circle")
       .attr("cx", padding/2)
       .attr("cy", padding*5 - 15)
@@ -317,7 +317,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("y", padding*5 + 2 - 15)
       .text("breakdown of fish tissue")
       .style("alignment-baseline", "middle")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("font-family", "Cabin")
       .style("fill", textColor);
     svg.append("text")
@@ -326,7 +326,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .text("& sediments")
       .style("font-family", "Cabin")
       .style("alignment-baseline", "middle")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("fill", textColor);
 
     // add more annotations
@@ -351,7 +351,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xPScale(2010))
       .attr("y", yScale(-500))
       .text("There are peaks in PCB concentrations")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -359,7 +359,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xPScale(2010))
       .attr("y", yScale(-500) + 15)
       .text("in 2004 and 2016. Both peaks are caused")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -367,7 +367,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xPScale(2010))
       .attr("y", yScale(-500) + 30)
       .text("by major PCB contamination found in")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -375,7 +375,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xPScale(2010))
       .attr("y", yScale(-500) + 45)
       .text("tissues of double-crested cormorants.")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("line")
@@ -399,7 +399,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xMScale(2003))
       .attr("y", yScale(-500))
       .text("Similar to PCB concentration peaks,")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -407,7 +407,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xMScale(2003))
       .attr("y", yScale(-500) + 15)
       .text("the highest mercury concentration was")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -415,7 +415,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xMScale(2003))
       .attr("y", yScale(-500) + 30)
       .text("found in 2003 inside tissues of")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -423,7 +423,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", xMScale(2003))
       .attr("y", yScale(-500) + 45)
       .text("double-crested cormorants.")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("text-anchor", "middle")
       .style("fill", textColor);
     svg.append("text")
@@ -431,7 +431,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2 - padding*4)
       .attr("y", yearAttr.height/2 - padding*8)
       .text("When the concentrations are separated, the peaks")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("fillcolor", textColor)
       .style("opacity", 0);
     svg.append("text")
@@ -439,7 +439,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2 - padding*4)
       .attr("y", yearAttr.height/2 - padding*8 + 15)
       .text("in fish tissues are more pronounced, meaning that")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("fill", textColor)
       .style("opacity", 0);
     svg.append("text")
@@ -447,7 +447,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2 - padding*4)
       .attr("y", yearAttr.height/2 - padding*8 + 30)
       .text("most of the toxins are found within tissues rather")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("fill", textColor)
       .style("opacity", 0);
     svg.append("text")
@@ -455,7 +455,7 @@ function drawTotalVis(svg, yearAttr, pData, mData, p1Data, p2Data, m1Data, m2Dat
       .attr("x", yearAttr.width/2 - padding*4)
       .attr("y", yearAttr.height/2 - padding*8 + 45)
       .text("than sediments.")
-      .style("font-size", 13)
+      .style("font-size", "13px")
       .style("fill", textColor)
       .style("opacity", 0);
 }
