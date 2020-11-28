@@ -15,9 +15,10 @@ function drawCircleVis(svgClass, maxVal, pFishData, pSedimentData, mFishData, mS
   for (var loc of locationList) {
     svg.append("text")
       .attr("x", (circleAttr.width - padding*10)/7 * count + 60 + padding*5)
-      .attr("y", circleAttr.height/2)
+      .attr("y", circleAttr.height/2 - padding)
       .text(locToFullLocation[loc])
       .style("text-anchor", "middle")
+      .style("fill", textColor)
       .style("alignment-baseline", "middle");
 
     count = count+1;
@@ -25,33 +26,33 @@ function drawCircleVis(svgClass, maxVal, pFishData, pSedimentData, mFishData, mS
 
   // add toxins labels
   svg.append("text")
-    .attr("x", padding*6)
+    .attr("x", padding)
     .attr("y", circleAttr.height/4 - 7.5)
-    .text("PCB Concentration")
-    .style("font-weight", "bold")
-    .style("text-anchor", "end")
-    .style("font-size", 14);
+    .text("Average PCB")
+    .style("text-anchor", "start")
+    .style("fill", textColor)
+    .style("font-size", 12);
   svg.append("text")
-    .attr("x", padding*6)
+    .attr("x", padding)
     .attr("y", circleAttr.height/4 + 7.5)
-    .text("Average (ng/g)")
-    .style("font-weight", "bold")
-    .style("text-anchor", "end")
-    .style("font-size", 14);
+    .text("Concentration (ng/g)")
+    .style("text-anchor", "start")
+    .style("fill", textColor)
+    .style("font-size", 12);
   svg.append("text")
-    .attr("x", padding*6)
+    .attr("x", padding)
     .attr("y", circleAttr.height/4 * 3 - 7.5)
-    .text("Mercury Concentration")
-    .style("font-weight", "bold")
-    .style("text-anchor", "end")
-    .style("font-size", 14);
+    .text("Average Mercury")
+    .style("text-anchor", "start")
+    .style("fill", textColor)
+    .style("font-size", 12);
   svg.append("text")
-    .attr("x", padding*6)
+    .attr("x", padding)
     .attr("y", circleAttr.height/4 * 3 + 7.5)
-    .text("Average (ng/g)")
-    .style("font-weight", "bold")
-    .style("text-anchor", "end")
-    .style("font-size", 14);
+    .text("Concentration (ng/g)")
+    .style("text-anchor", "start")
+    .style("fill", textColor)
+    .style("font-size", 12);
 
   // draw legend annotation
   let radialScale = d3.scaleRadial()
@@ -66,7 +67,7 @@ function drawCircleVis(svgClass, maxVal, pFishData, pSedimentData, mFishData, mS
     .attr("transform", "translate(" + (circleAttr.width - padding*3) + ","
       + (50) + ")")
     .attr("d", topArcGenerator())
-    .style("fill", "black");
+    .style("fill", fishColor);
   let botArcGenerator = d3.arc()
     .outerRadius(10)
     .innerRadius(0)
@@ -76,22 +77,43 @@ function drawCircleVis(svgClass, maxVal, pFishData, pSedimentData, mFishData, mS
     .attr("transform", "translate(" + (circleAttr.width - padding*3) + ","
       + (50) + ")rotate(180)")
     .attr("d", botArcGenerator())
-    .style("fill", "grey");
+    .style("fill", sedimentColor);
   svg.append("text")
-    .attr("x", circleAttr.width - padding*2)
-    .attr("y", 30)
-    .text("fish tissues")
+    .attr("x", circleAttr.width - padding*3)
+    .attr("y", 20)
+    .text("↓ fish tissues")
+    .style("fill", textColor)
+    .style("font-weight", "bold")
     .style("font-size", 12);
   svg.append("text")
-    .attr("x", circleAttr.width - padding*2.25)
+    .attr("x", circleAttr.width - padding*2.75)
     .attr("y", 70)
-    .text("sediments")
+    .text("↖ sediments")
+    .style("font-weight", "bold")
+    .style("fill", textColor)
     .style("font-size", 12);
+  svg.append("text")
+    .attr("x", circleAttr.width - padding*4)
+    .attr("y", 40)
+    .text("✋ hover for values")
+    .style("text-anchor", "end")
+    .style("font-weight", "bold")
+    .style("fill", accentColor)
+    .style("font-size", 12);
+
+  // add title
+  svg.append("text")
+    .attr("x", circleAttr.width/2)
+    .attr("y", padding/2 + 5)
+    .text("Average Concentration by SF Bay Segments")
+    .style("text-anchor", "middle")
+    .style("font-family", "Ubuntu")
+    .style("font-weight", "bold")
+    .style("font-color", textColor)
+    .style("font-size", 18);
 }
 
 function drawCircleRow(svg, circleAttr, verticalMul, maxVal, fishData, sedimentData, label) {
-  console.log(fishData);
-  console.log(sedimentData);
   let radialScale = d3.scaleRadial()
       .domain([0, maxVal])
       .range([0, (circleAttr.width - padding*10)/14]);
@@ -120,7 +142,7 @@ function drawCircleRow(svg, circleAttr, verticalMul, maxVal, fishData, sedimentD
       .attr("transform", "translate(" + ((circleAttr.width - padding*10)/7 * count + 60 + padding*5) + ","
         + (circleAttr.height/4 * verticalMul) + ")")
       .attr("d", topArcGenerator())
-      .style("fill", "black")
+      .style("fill", fishColor)
       .on("mousemove", function() {
         // enlarge semi-circle size
         let tempId = this.id;
@@ -182,7 +204,7 @@ function drawCircleRow(svg, circleAttr, verticalMul, maxVal, fishData, sedimentD
       .attr("transform", "translate(" + ((circleAttr.width - padding*10)/7 * count + 60 + padding*5) + ","
         + (circleAttr.height/4 * verticalMul) + ")rotate(180)")
       .attr("d", botArcGenerator())
-      .style("fill", "grey")
+      .style("fill", sedimentColor)
       .on("mousemove", function() {
         // enlarge semi-circle size
         let tempId = this.id;

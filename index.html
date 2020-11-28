@@ -2,17 +2,48 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>SFEI Visualization</title>
+    <title>SFEI</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
     <script type="text/javascript" src="helper.js"></script>
     <script type="text/javascript" src="circleVis.js"></script>
     <script type="text/javascript" src="yearVis.js"></script>
+    <script type="text/javascript" src="barVis.js"></script>
   </head>
-  <body style="font-family: 'Cabin'; text-align: center; background-color: #fbfbfb; margin-top: 50;">
-    <h2 style="font-family: 'Ubuntu'; padding-top: 50px; font-size: 40px;">Title Title Title</h2>
+  <body style="font-family: 'Cabin'; text-align: center; background-color: #F8F8F8; margin-top: 50;">
+    <h2 style="font-family: 'Ubuntu'; padding-top: 50px; font-size: 40px;">PCBs and Mercury Contamination in SF Bay</h2>
+    <div style="margin: 0 auto; width: 900px; font-size: 18; text-align: left; padding-top:25px;">
+      <p>PCBs and mercury are two of the most dangerous contaminants in SF Bay waters. PCBs are known to cause
+       cancer and other health risks while mercury is known for harming the brain and nervous systems. Since
+       we consume wildlife from the SF Bay, it is important that we are aware of the potential contaminants
+       that the wildlife may contain. </p>
+
+     <p>If we were to compare PCB and mercury concentrations in fish tissues and sediments through 1980-2018, we can
+      see from the graphs that PCB contamination is much more potent than that of mercury. More importantly, it's
+      interesting that most of the contaimination exists in fish tissues over sediments. (Note: results are normalized to reduce
+      bias with frequency of testing). </p>
+    </div>
+    <svg height="600" width="1000" class="yearVis"/>
+    <div style="margin: 0 auto; width: 900px; font-size: 18; text-align: left; padding-bottom:75px;">
+      <p>It is important to note from the graph above that peaks in contaminants' concentration occurred around 2003-2004, but
+      ever since, there is a clear and conscious effort to reduce such contaminants, as evident by the graph.</p>
+
+     <p>Surprisingly, when we normalize the data by region and not by year, the outliers from 2003-2004 are reduced, and we see
+     that, overall, it is more common to find mercury contaiminations, especially in South SF Bay and San Pablo Bay. Another
+     consistent pattern is that mercury tends to be prevalent in both fish tissues and sediments across the Bay while PCB isn't
+     found commonly besides Central SF Bay. </p>
+    </div>
     <svg height="450" width="1100" class="circleVis"/>
+    <div style="margin: 0 auto; width: 900px; font-size: 18; text-align: left; padding-bottom:25px;">
+      <p>Knowing that the SF Bay waters are not completely clean of contaminants, what does this say about the types of fish that
+      we can safely consume? Let's take a look at the fishes to avoid based on contaminants' concentration. The Office of Environmental Health Hazard Assessment recommends that fishes are fully grilled or cooked
+      before consumption to reduce chemicals. For the most part, PCBs can be cooked away while mercury cannot be removed through cooking.</p>
+    </div>
+    <svg height="450" width="900" class="barVis"/>
+    <footer style="margin-top: 10px">
+    	<p style="font-family: 'Cabin'; font-size: 15px;">Built by <a href="https://www.linkedin.com/in/lesley-huang-48400/">Lesley</a> 🐠🐟🐡</p>
+    </footer>
     <script>
     let padding = 25;
     const locationList = ["carq", "central", "lower", "rivers", "san", "south", "suisun"];
@@ -25,6 +56,12 @@
       "south": "South SF Bay",
       "suisun": "Suisun Bay"
     }
+    const fishColor = "#50C0E7";
+    const sedimentColor = "#E99A5D";
+    const accentColor = "#648381";
+    const bgColor = "#F8F8F8";
+    const textColor = "#12242B";
+    let isBreakdown = false;
 
     const getDataAndDrawVis = async() => {
        let pcbFishData = await d3.csv("pcb_tissue_final.csv");
@@ -35,9 +72,6 @@
        let mercuryFishNames = getFishNames(mercuryFishData);
        let mercurySedimentData = await d3.csv("mercury_sediment_final.csv");
 
-       // console.log(findAvgBySet(pcbFishData, pcbFishNames, "commonname"));
-       // console.log(findAvgBySet(mercuryFishData, mercuryFishNames, "commonname", 1000));
-
        let pcbFishAvgByLocation = findAvgBySet(pcbFishData, locationList, "location");
        let pcbSedimentAvgByLocation = findAvgBySet(pcbSedimentData, locationList, "location");
        let mercuryFishAvgByLocation = findAvgBySet(mercuryFishData, locationList, "location", 1000);
@@ -45,6 +79,26 @@
        let circleMaxValue = findMaxValueInMap(mercuryFishAvgByLocation);
 
        drawCircleVis(".circleVis", circleMaxValue, pcbFishAvgByLocation, pcbSedimentAvgByLocation, mercuryFishAvgByLocation, mercurySedimentAvgByLocation);
+
+       let pcbFishTotalByYear = findTotalByYearAndSet(pcbFishData, locationList, "location");
+       let pcbSedimentTotalByYear = findTotalByYearAndSet(pcbSedimentData, locationList, "location");
+       let mercuryFishTotalByYear = findTotalByYearAndSet(mercuryFishData, locationList, "location", 1000);
+       let mercurySedimentTotalByYear = findTotalByYearAndSet(mercurySedimentData, locationList, "location", 1000);
+
+       let pcbTotalByYear = findTotalByYear(pcbFishData.concat(pcbSedimentData));
+       let mercuryTotalByYear = findTotalByYear(mercuryFishData.concat(mercurySedimentData), 1000);
+
+       let pFishTotal = findTotalByYear(pcbFishData);
+       let pSedimentTotal = findTotalByYear(pcbSedimentData);
+       let mFishTotal = findTotalByYear(mercuryFishData, 1000);
+       let mSedimentTotal = findTotalByYear(mercurySedimentData, 1000);
+       drawYearVis(".yearVis", pcbFishTotalByYear, pcbSedimentTotalByYear, mercuryFishTotalByYear, mercurySedimentTotalByYear, pcbTotalByYear, mercuryTotalByYear, pFishTotal, pSedimentTotal, mFishTotal, mSedimentTotal);
+
+       let pFish = findAvgBySet(pcbFishData, pcbFishNames, "commonname");
+       let mFish = findAvgBySet(mercuryFishData, mercuryFishNames, "commonname", 1000);
+       console.log(pFish)
+       console.log(mFish)
+       drawBarVis(".barVis", pFish, mFish);
      }
 
      getDataAndDrawVis();
